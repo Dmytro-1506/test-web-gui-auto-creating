@@ -1,0 +1,24 @@
+/*
+ * Layout style tokens.
+ * These affect visual density and shape, not theme colors.
+ */
+
+[data-layout="modern"] {
+  --layout-page-padding: var(--space-6);
+  --layout-section-gap: var(--space-5);
+  --layout-card-padding: var(--space-5);
+  --layout-card-radius: var(--radius-lg);
+  --layout-control-radius: var(--radius-md);
+  --layout-border-width: 1px;
+  --layout-card-shadow: var(--shadow-card);
+}
+
+[data-layout="classic"] {
+  --layout-page-padding: var(--space-4);
+  --layout-section-gap: var(--space-4);
+  --layout-card-padding: var(--space-4);
+  --layout-card-radius: var(--radius-sm);
+  --layout-control-radius: var(--radius-sm);
+  --layout-border-width: 1px;
+  --layout-card-shadow: none;
+}

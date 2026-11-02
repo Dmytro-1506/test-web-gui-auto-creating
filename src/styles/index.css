@@ -1,0 +1,8 @@
+/*
+ * Import this file once from main.tsx.
+ */
+
+@import "./tokens.css";
+@import "./themes.css";
+@import "./layouts.css";
+@import "./base.css";

@@ -1,0 +1,51 @@
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0.625rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md, 0.5rem);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease;
+}
+.action-button--primary {
+  color: #fff;
+  background: var(--color-primary, #2563eb);
+}
+.action-button--primary:hover:not(:disabled) {
+  background: var(--color-primary-hover, #1d4ed8);
+}
+.action-button--secondary {
+  color: var(--color-text, #202124);
+  background: var(--color-surface, #fff);
+  border-color: var(--color-border, #d1d5db);
+}
+.action-button--secondary:hover:not(:disabled) {
+  background: var(--color-surface-hover, #f3f4f6);
+}
+.action-button--danger {
+  color: #fff;
+  background: var(--color-danger, #dc2626);
+}
+.action-button--danger:hover:not(:disabled) {
+  background: var(--color-danger-hover, #b91c1c);
+}
+.action-button:focus-visible {
+  outline: 2px solid var(--color-focus, #2563eb);
+  outline-offset: 3px;
+}
+.action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+@media (prefers-reduced-motion: reduce) {
+  .action-button {
+    transition: none;
+  }
+}

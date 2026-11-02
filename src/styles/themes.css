@@ -1,0 +1,65 @@
+/*
+ * Theme color tokens.
+ * Apply a theme with data-theme on the application root element.
+ */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-page: #f3f6fa;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-surface-hover: #edf3f9;
+  --color-text: #182230;
+  --color-text-muted: #5c6878;
+  --color-border: #d8e0e9;
+
+  --color-primary: #1769aa;
+  --color-primary-hover: #12578e;
+  --color-primary-contrast: #ffffff;
+
+  --color-nav: #17344f;
+  --color-nav-text: #eaf2fa;
+  --color-nav-muted: #b9cadd;
+  --color-nav-hover: #244b6d;
+  --color-nav-active: #1676cf;
+
+  --color-success: #16845b;
+  --color-warning: #a96808;
+  --color-danger: #c03945;
+  --color-info: #1769aa;
+
+  --color-focus-ring: #4a9cf0;
+  --shadow-card: 0 2px 8px rgb(24 34 48 / 7%);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-page: #111821;
+  --color-surface: #1b2531;
+  --color-surface-raised: #222e3c;
+  --color-surface-hover: #2a3949;
+  --color-text: #edf2f7;
+  --color-text-muted: #a8b4c3;
+  --color-border: #354354;
+
+  --color-primary: #62a9f5;
+  --color-primary-hover: #8bbfff;
+  --color-primary-contrast: #101923;
+
+  --color-nav: #101d2b;
+  --color-nav-text: #edf2f7;
+  --color-nav-muted: #a8b8ca;
+  --color-nav-hover: #20354a;
+  --color-nav-active: #1769aa;
+
+  --color-success: #52d2a0;
+  --color-warning: #f3bd5b;
+  --color-danger: #ff858d;
+  --color-info: #78b8ff;
+
+  --color-focus-ring: #8bc4ff;
+  --shadow-card: 0 2px 10px rgb(0 0 0 / 22%);
+}

@@ -1,0 +1,36 @@
+.color-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.color-picker__label {
+  color: var(--color-text, #202124);
+  font-size: 0.95rem;
+}
+.color-picker__control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.color-picker__input {
+  width: 3rem;
+  height: 2.5rem;
+  padding: 0.2rem;
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--color-surface, #fff);
+  cursor: pointer;
+}
+.color-picker__input:focus-visible {
+  outline: 2px solid var(--color-focus, #2563eb);
+  outline-offset: 2px;
+}
+.color-picker__input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.color-picker__value {
+  color: var(--color-text-muted, #6b7280);
+  font-family: monospace;
+  font-size: 0.875rem;
+}

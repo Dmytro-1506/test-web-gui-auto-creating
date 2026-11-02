@@ -1,0 +1,113 @@
+{
+  "configParams": {
+    "menuItems": {
+      "display": {
+        "id": "display",
+        "label": "Display",
+        "title": "Display Control Section",
+        "size": 2,
+        "position": 1,
+        "components": {
+          "textInput": {
+            "type": "textInput",
+            "id": "displayTextInput",
+            "label": "Text input",
+            "size": 3,
+            "position": 1,
+            "placeholder": "Input your text"
+          },
+          "sendTextButton": {
+            "type": "button",
+            "id": "sendTextButton",
+            "label": "Send text",
+            "action": "sendText",
+            "size": 4,
+            "position": 2
+          }
+        }
+      },
+      "led": {
+        "id": "led",
+        "label": "LED",
+        "title": "LED Control Section",
+        "size": 2,
+        "position": 2,
+        "components": {
+          "powerSwitch": {
+            "type": "toggleSwitch",
+            "id": "ledPowerSwitch",
+            "label": "LED Power",
+            "checked": false,
+            "size": 3,
+            "position": 1
+          },
+          "brightness": {
+            "type": "rangeSlider",
+            "id": "ledBrightnessSlider",
+            "label": "LED brightness",
+            "size": 3,
+            "position": 2,
+            "unit": "%",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "defaultValue": 90
+          }
+        }
+      },
+      "sound": {
+        "id": "sound",
+        "label": "Sound",
+        "title": "Sound Control Section",
+        "size": 2,
+        "position": 3,
+        "components": {
+          "volumeSlider": {
+            "type": "rangeSlider",
+            "id": "volumeSlider",
+            "label": "Volume",
+            "size": 3,
+            "position": 1,
+            "unit": "%",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "defaultValue": 50
+          },
+          "muteButton": {
+            "type": "button",
+            "id": "muteButton",
+            "action": "muteSound",
+            "label": "Mute",
+            "size": 3,
+            "position": 2
+          }
+        }
+      },
+      "settings": {
+        "id": "settings",
+        "label": "Settings",
+        "title": "Settings Section",
+        "size": 2,
+        "position": 4,
+        "components": {
+          "resetButton": {
+            "type": "button",
+            "id": "resetButton",
+            "label": "Reset to Defaults",
+            "size": 3,
+            "position": 1
+          },
+          "updateButton": {
+            "type": "button",
+            "id": "updateButton",
+            "action": "updateFirmware",
+            "label": "Update Firmware",
+            "size": 3,
+            "position": 2
+          }
+        }
+      }
+    }
+  }
+}

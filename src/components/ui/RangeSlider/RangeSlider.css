@@ -1,0 +1,8 @@
+.range-slider { display: flex; flex-direction: column; gap: 0.75rem; }
+.range-slider__header, .range-slider__limits { display: flex; align-items: center; justify-content: space-between; }
+.range-slider__label { color: var(--color-text, #202124); font-size: 0.95rem; }
+.range-slider__value { color: var(--color-primary, #2563eb); font-weight: 600; font-variant-numeric: tabular-nums; }
+.range-slider__input { width: 100%; accent-color: var(--color-primary, #2563eb); cursor: pointer; }
+.range-slider__input:focus-visible { outline: 2px solid var(--color-focus, #2563eb); outline-offset: 4px; }
+.range-slider__input:disabled { opacity: 0.5; cursor: not-allowed; }
+.range-slider__limits { color: var(--color-text-muted, #6b7280); font-size: 0.8rem; }
