@@ -5,24 +5,27 @@
         "id": "display",
         "label": "Display",
         "title": "Display Control Section",
-        "size": 2,
-        "position": 1,
         "components": {
           "textInput": {
             "type": "textInput",
             "id": "displayTextInput",
-            "label": "Text input",
-            "size": 3,
             "position": 1,
-            "placeholder": "Input your text"
+            "params": {
+              "size": 3,
+              "label": "Text input",
+              "placeholder": "Input your text",
+              "defaultValue": ""
+            }
           },
           "sendTextButton": {
             "type": "button",
             "id": "sendTextButton",
-            "label": "Send text",
-            "action": "sendText",
-            "size": 4,
-            "position": 2
+            "position": 2,
+            "params": {
+              "size": 4,
+              "label": "Send text",
+              "action": "sendText"
+            }
           }
         }
       },
@@ -30,28 +33,100 @@
         "id": "led",
         "label": "LED",
         "title": "LED Control Section",
-        "size": 2,
-        "position": 2,
+        "defaultState": {
+          "isOn": false,
+          "brightness": 50,
+          "effect": "none",
+          "switchColors": false,
+          "effectInterval": 1000,
+          "colors": ["#FF0000", "#00FF00", "#0000FF"]
+        },
         "components": {
           "powerSwitch": {
             "type": "toggleSwitch",
             "id": "ledPowerSwitch",
-            "label": "LED Power",
-            "checked": false,
-            "size": 3,
-            "position": 1
+            "position": 1,
+            "params": {
+              "size": 3,
+              "label": "LED Power",
+              "dependency": "general",
+              "checked": false
+            }
           },
           "brightness": {
             "type": "rangeSlider",
             "id": "ledBrightnessSlider",
-            "label": "LED brightness",
-            "size": 3,
             "position": 2,
-            "unit": "%",
-            "min": 1,
-            "max": 100,
-            "step": 1,
-            "defaultValue": 90
+            "params": {
+              "size": 3,
+              "label": "LED brightness",
+              "unit": "%",
+              "min": 1,
+              "max": 100,
+              "step": 1,
+              "defaultValue": 90,
+              "dependency": {
+                "componentId": "ledPowerSwitch",
+                "condition": "checked"
+              }
+            }
+          },
+          "colorPicker": {
+            "type": "colorPicker",
+            "id": "ledColorPicker",
+            "position": 3,
+            "params": {
+              "size": 3,
+              "label": "LED color",
+              "defaultValue": "#FF0000",
+              "dependency": {
+                "componentId": "ledPowerSwitch",
+                "condition": "checked"
+              }
+            }
+          },
+          "effectSelector": {
+            "type": "dropdown",
+            "id": "ledEffectSelector",
+            "position": 4,
+            "params": {
+              "size": 3,
+              "label": "LED effect",
+              "options": [
+                {
+                  "type": "blink",
+                  "label": "Blink"
+                },
+                {
+                  "type": "pulse",
+                  "label": "Pulse"
+                },
+                {
+                  "type": "none",
+                  "label": "None"
+                }
+              ],
+              "defaultValue": "none",
+              "dependency": {
+                "componentId": "ledPowerSwitch",
+                "condition": "checked"
+              }
+            }
+          },
+          "codeSnippet": {
+            "type": "codeSnippet",
+            "id": "ledCodeSnippet",
+            "position": 5,
+            "params": {
+              "size": 3,
+              "label": "LED Code Snippet",
+              "language": "json",
+              "defaultValue": "{\n  \"isOn\": false,\n  \"brightness\": 50,\n  \"effect\": \"none\",\n  \"switchColors\": false,\n  \"effectInterval\": 1000,\n  \"colors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ]\n}",
+              "dependency": {
+                "componentId": "ledPowerSwitch",
+                "condition": "checked"
+              }
+            }
           }
         }
       },
@@ -59,28 +134,30 @@
         "id": "sound",
         "label": "Sound",
         "title": "Sound Control Section",
-        "size": 2,
-        "position": 3,
         "components": {
           "volumeSlider": {
             "type": "rangeSlider",
             "id": "volumeSlider",
-            "label": "Volume",
-            "size": 3,
             "position": 1,
-            "unit": "%",
-            "min": 0,
-            "max": 100,
-            "step": 1,
-            "defaultValue": 50
+            "params": {
+              "size": 3,
+              "label": "Volume",
+              "unit": "%",
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "defaultValue": 50
+            }
           },
           "muteButton": {
             "type": "button",
             "id": "muteButton",
-            "action": "muteSound",
-            "label": "Mute",
-            "size": 3,
-            "position": 2
+            "position": 2,
+            "params": {
+              "size": 3,
+              "label": "Mute",
+              "action": "muteSound"
+            }
           }
         }
       },
@@ -88,23 +165,25 @@
         "id": "settings",
         "label": "Settings",
         "title": "Settings Section",
-        "size": 2,
-        "position": 4,
         "components": {
           "resetButton": {
             "type": "button",
             "id": "resetButton",
-            "label": "Reset to Defaults",
-            "size": 3,
-            "position": 1
+            "position": 1,
+            "params": {
+              "size": 3,
+              "label": "Reset to Defaults"
+            }
           },
           "updateButton": {
             "type": "button",
             "id": "updateButton",
-            "action": "updateFirmware",
-            "label": "Update Firmware",
-            "size": 3,
-            "position": 2
+            "position": 2,
+            "params": {
+              "size": 3,
+              "label": "Update Firmware",
+              "action": "updateFirmware"
+            }
           }
         }
       }

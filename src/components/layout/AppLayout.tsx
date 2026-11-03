@@ -1,33 +1,25 @@
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
+
 import type { AppearanceSettings } from "../../app/settings/appearance";
+import { menuItems } from "../../config/appConfig";
 import { Header } from "./Header";
 import { Sidebar, type NavigationItemId } from "./Sidebar";
 import { SectionContent } from "../section_content/SectionContent";
 
 import "./AppLayout.css";
 
-import { configParams } from "../../config/esp32-web-config.json";
-
-const menuItems = Object.values(configParams.menuItems).sort(
-  (a, b) => a.position - b.position,
-);
-
 interface AppLayoutProps {
   appearance: AppearanceSettings;
   onAppearanceChange: (next: AppearanceSettings) => void;
-  children?: ReactNode;
 }
 
-const sectionTitles: Record<NavigationItemId, string> = menuItems.reduce(
-  (acc, item) => {
-    acc[item.id as NavigationItemId] = item.title;
-    return acc;
-  },
-  {} as Record<NavigationItemId, string>,
-);
-
 export function AppLayout({ appearance, onAppearanceChange }: AppLayoutProps) {
-  const [activeItem, setActiveItem] = useState<NavigationItemId>("overview");
+  // Start with the first section that actually exists in the JSON config.
+  const [activeItem, setActiveItem] = useState<NavigationItemId>(
+    menuItems[0]?.id ?? "",
+  );
+
+  const activeSection = menuItems.find((item) => item.id === activeItem);
 
   return (
     <div className="app-shell">
@@ -38,8 +30,9 @@ export function AppLayout({ appearance, onAppearanceChange }: AppLayoutProps) {
 
         <main className="app-main" id="main-content">
           <p className="app-main__eyebrow">ESP32 Smart Panel</p>
-
-          <h2 className="app-main__title">{sectionTitles[activeItem]}</h2>
+          <h2 className="app-main__title">
+            {activeSection?.title ?? "Section not found"}
+          </h2>
           <SectionContent activeItem={activeItem} />
         </main>
       </div>
