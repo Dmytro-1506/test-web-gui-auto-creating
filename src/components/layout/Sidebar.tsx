@@ -1,46 +1,32 @@
+import { menuItems } from "../../config/appConfig";
 import "./Sidebar.css";
-import { configParams } from "../../config/esp32-web-config.json";
 
-const menuItems = Object.values(configParams.menuItems).sort(
-  (a, b) => a.position - b.position,
-);
-
-const menuIcons: { id: string; icon: string }[] = [
-  { id: "overview", icon: "⌂" }, // Overview
-  { id: "display", icon: "▣" }, // Display
-  { id: "led", icon: "●" }, // LED
-  { id: "sound", icon: "♫" }, // Sound
-  { id: "buttons", icon: "▤" }, // Buttons
-  { id: "battery", icon: "▰" }, // Battery
-  { id: "settings", icon: "⚙" }, // Settings
-  { id: "activity-log", icon: "▤" }, // Activity log
-];
-
-export type NavigationItemId =
-  | "overview"
-  | "display"
-  | "led"
-  | "sound"
-  | "buttons"
-  | "battery"
-  | "settings"
-  | "activity-log";
+// IDs come from the JSON configuration, so the navigation is not hard-coded.
+export type NavigationItemId = string;
 
 interface SidebarProps {
   activeItem: NavigationItemId;
   onNavigate: (item: NavigationItemId) => void;
 }
 
-const navigationItems: { id: NavigationItemId; label: string; icon: string }[] =
-  menuItems.map((item) => ({
-    id: item.id as NavigationItemId,
-    label: item.label,
-    icon: menuIcons.find((icon) => icon.id === item.id)?.icon || "☰", // Default icon if not found
-  }));
+const menuIcons: Record<string, string> = {
+  overview: "⌂",
+  display: "▣",
+  led: "●",
+  sound: "♫",
+  buttons: "▤",
+  battery: "▰",
+  settings: "⚙",
+  "activity-log": "▤",
+};
+
+const navigationItems = menuItems.map((item) => ({
+  id: item.id,
+  label: item.label,
+  icon: menuIcons[item.id] ?? "☰",
+}));
 
 export function Sidebar({ activeItem, onNavigate }: SidebarProps) {
-  console.log("ESP32 Web Config Params:", { configParams });
-
   return (
     <aside className="app-sidebar" aria-label="Main sidebar">
       <nav className="app-sidebar__nav" aria-label="Main navigation">
