@@ -7,7 +7,7 @@ export interface ToggleSwitchConfig {
   params: {
     size: number;
     label: string;
-    checked?: boolean;
-    dependency?: ComponentDependency;
+    checked: boolean;
+    dependency: ComponentDependency;
   };
 }

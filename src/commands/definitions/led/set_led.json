@@ -1,0 +1,28 @@
+{
+  "id": "test-set-led-001",
+  "type": "command",
+  "command": "setLED",
+  "parameters": {
+    "isOn": {
+      "$source": "component",
+      "componentId": "ledPowerSwitch"
+    },
+    "brightness": {
+      "$source": "component",
+      "componentId": "ledBrightnessSlider"
+    },
+    "effect": {
+      "$source": "component",
+      "componentId": "ledEffectSelector"
+    },
+    "effectInterval": 1000,
+    "switchColors": true,
+    "colors": [
+      {
+        "$source": "component",
+        "componentId": "ledColorPicker",
+        "transform": "hexToRgb"
+      }
+    ]
+  }
+}

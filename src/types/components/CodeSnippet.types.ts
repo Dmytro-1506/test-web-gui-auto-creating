@@ -8,6 +8,7 @@ export interface CodeSnippetConfig {
     size: number;
     label: string;
     language: string;
+    commandRef: string;
     defaultValue: string;
     dependency?: ComponentDependency;
   };

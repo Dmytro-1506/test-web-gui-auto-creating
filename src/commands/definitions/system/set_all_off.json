@@ -1,0 +1,5 @@
+{
+  "id": "test-set-all-off-001",
+  "type": "command",
+  "command": "setAllOff"
+}

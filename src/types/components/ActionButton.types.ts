@@ -7,7 +7,8 @@ export interface ActionButtonConfig {
   params: {
     size: number;
     label: string;
-    action?: string;
+    action: string;
+    commandRef?: string;
     dependency?: ComponentDependency;
   };
 }

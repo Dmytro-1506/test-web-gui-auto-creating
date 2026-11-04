@@ -1,0 +1,5 @@
+{
+  "id": "test-ping-001",
+  "type": "command",
+  "command": "ping"
+}
