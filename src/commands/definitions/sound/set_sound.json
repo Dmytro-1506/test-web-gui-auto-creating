@@ -1,0 +1,38 @@
+{
+  "id": "test-set-sound-001",
+  "type": "command",
+  "command": "setSound",
+  "parameters": {
+    "sound": "play",
+    "sequence": [
+      { "frequency": 262, "duration": 300, "delay": 0 },
+      { "frequency": 262, "duration": 100, "delay": 0 },
+      { "frequency": 294, "duration": 400, "delay": 0 },
+      { "frequency": 262, "duration": 400, "delay": 0 },
+      { "frequency": 349, "duration": 400, "delay": 0 },
+      { "frequency": 330, "duration": 800, "delay": 0 },
+
+      { "frequency": 262, "duration": 300, "delay": 0 },
+      { "frequency": 262, "duration": 100, "delay": 0 },
+      { "frequency": 294, "duration": 400, "delay": 0 },
+      { "frequency": 262, "duration": 400, "delay": 0 },
+      { "frequency": 392, "duration": 400, "delay": 0 },
+      { "frequency": 349, "duration": 800, "delay": 0 },
+
+      { "frequency": 262, "duration": 300, "delay": 0 },
+      { "frequency": 262, "duration": 100, "delay": 0 },
+      { "frequency": 523, "duration": 400, "delay": 0 },
+      { "frequency": 440, "duration": 400, "delay": 0 },
+      { "frequency": 349, "duration": 400, "delay": 0 },
+      { "frequency": 330, "duration": 400, "delay": 0 },
+      { "frequency": 294, "duration": 400, "delay": 0 },
+
+      { "frequency": 466, "duration": 300, "delay": 0 },
+      { "frequency": 466, "duration": 100, "delay": 0 },
+      { "frequency": 440, "duration": 400, "delay": 0 },
+      { "frequency": 349, "duration": 400, "delay": 0 },
+      { "frequency": 392, "duration": 400, "delay": 0 },
+      { "frequency": 349, "duration": 800, "delay": 0 }
+    ]
+  }
+}

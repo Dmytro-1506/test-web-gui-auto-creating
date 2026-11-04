@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+
+import { useDevice } from "../../hooks/useDevice";
+import { useCommand } from "../../hooks/useCommand";
 
 import { ActionButton } from "../ui/ActionButton/ActionButton";
 import { CodeSnippet } from "../ui/CodeSnippet/CodeSnippet";
@@ -24,8 +27,10 @@ function getInitialValue(
   switch (component.type) {
     case "toggleSwitch":
       return component.params.checked;
+
     case "button":
       return undefined;
+
     case "textInput":
     case "colorPicker":
     case "rangeSlider":
@@ -66,16 +71,27 @@ function isComponentDisabled(
   switch (dependency.condition) {
     case "checked":
       return componentStates[dependency.componentId] !== true;
+
     default:
       return false;
   }
 }
 
 export function SectionContent({ activeItem }: SectionContentProps) {
+  const { connected, loading, error } = useDevice();
+
+  const { createCommand, executeCommand } = useCommand();
+
   const [sectionStates, setSectionStates] =
     useState<SectionStates>(createInitialStates);
 
   const activeSection = menuItems.find((section) => section.id === activeItem);
+
+  // Combine all section states for command parameter resolution.
+  const allComponentValues = useMemo(
+    () => Object.assign({}, ...Object.values(sectionStates)),
+    [sectionStates],
+  );
 
   if (!activeSection) {
     return null;
@@ -87,10 +103,34 @@ export function SectionContent({ activeItem }: SectionContentProps) {
     setSectionStates((previousStates) => ({
       ...previousStates,
       [activeItem]: {
-        ...(previousStates[activeItem] ?? {}),
+        ...previousStates[activeItem],
         [componentId]: value,
       },
     }));
+  }
+
+  async function handleAction(component: ComponentConfig) {
+    if (
+      component.type !== "button" ||
+      component.params.action !== "sendCommand"
+    ) {
+      return;
+    }
+
+    const commandRef = component.params.commandRef;
+
+    if (!commandRef) {
+      console.error(`No commandRef configured for button: ${component.id}`);
+      return;
+    }
+
+    try {
+      const response = await executeCommand(commandRef, allComponentValues);
+
+      console.log("Command sent successfully:", response);
+    } catch (error) {
+      console.error("Command execution failed:", error);
+    }
   }
 
   function renderComponent(component: ComponentConfig) {
@@ -116,12 +156,7 @@ export function SectionContent({ activeItem }: SectionContentProps) {
             label={component.params.label}
             variant="primary"
             disabled={disabled}
-            onClick={() => {
-              if (component.params.action) {
-                // TODO: Dispatch the configured action through an action handler.
-                console.log("Configured action:", component.params.action);
-              }
-            }}
+            onClick={() => handleAction(component)}
           />
         );
 
@@ -131,8 +166,10 @@ export function SectionContent({ activeItem }: SectionContentProps) {
             key={component.id}
             id={component.id}
             label={component.params.label}
-            checked={Boolean(componentStates[component.id] ?? false)}
-            disabled={disabled}
+            checked={Boolean(
+              componentStates[component.id] ?? component.params.checked,
+            )}
+            disabled={component.params.dependency ? disabled : false}
             onChange={(checked) => handleComponentChange(component.id, checked)}
           />
         );
@@ -188,24 +225,40 @@ export function SectionContent({ activeItem }: SectionContentProps) {
           />
         );
 
-      case "codeSnippet":
+      case "codeSnippet": {
+        const preview = createCommand(
+          component.params.commandRef,
+          allComponentValues,
+        );
+
         return (
           <CodeSnippet
             key={component.id}
             id={component.id}
             label={component.params.label}
             language={component.params.language}
-            value={String(
-              componentStates[component.id] ?? component.params.defaultValue,
-            )}
+            value={JSON.stringify(preview, null, 2)}
             disabled={disabled}
           />
         );
+      }
     }
   }
 
   return (
     <section className="app-section-content">
+      <div>
+        <h2>Device status</h2>
+
+        {!connected && (
+          <p className="connection-warning">ESP32 not connected</p>
+        )}
+
+        {loading && <p>Device status is loading ...</p>}
+
+        {error && <p className="error-message">{error}</p>}
+      </div>
+
       {Object.values(activeSection.components)
         .sort((a, b) => a.position - b.position)
         .map(renderComponent)}

@@ -1,0 +1,21 @@
+{
+  "id": "test-text-001",
+  "type": "command",
+  "command": "showText",
+  "parameters": {
+    "text": "Eine Response wird vom ESP32 als Antwort auf einen Command an den Client gesendet.",
+    "x": 10,
+    "y": 28,
+    "fontSize": 18,
+    "textColor": {
+      "red": 200,
+      "green": 200,
+      "blue": 200
+    },
+    "backgroundColor": {
+      "red": 20,
+      "green": 20,
+      "blue": 20
+    }
+  }
+}

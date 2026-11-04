@@ -121,7 +121,23 @@
               "size": 3,
               "label": "LED Code Snippet",
               "language": "json",
+              "commandRef": "setLED",
               "defaultValue": "{\n  \"isOn\": false,\n  \"brightness\": 50,\n  \"effect\": \"none\",\n  \"switchColors\": false,\n  \"effectInterval\": 1000,\n  \"colors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ]\n}",
+              "dependency": {
+                "componentId": "ledPowerSwitch",
+                "condition": "checked"
+              }
+            }
+          },
+          "button": {
+            "type": "button",
+            "id": "setLED",
+            "position": 6,
+            "params": {
+              "size": 3,
+              "label": "Apply LED Settings",
+              "action": "sendCommand",
+              "commandRef": "setLED",
               "dependency": {
                 "componentId": "ledPowerSwitch",
                 "condition": "checked"

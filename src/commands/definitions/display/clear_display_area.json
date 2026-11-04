@@ -1,0 +1,11 @@
+{
+  "id": "test-clear-area-001",
+  "type": "command",
+  "command": "clearDisplayArea",
+  "parameters": {
+    "x": 0,
+    "y": 0,
+    "width": 320,
+    "height": 170
+  }
+}
