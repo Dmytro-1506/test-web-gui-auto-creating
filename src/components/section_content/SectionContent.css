@@ -1,1 +1,199 @@
-// css styles shoud be written in camelCase format for React components
+/*
+ * Section content layout.
+ * Component-specific controls keep their own styles; this file controls
+ * the shared section structure, status panel and dynamic component cards.
+ */
+
+.app-section-content {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--layout-section-gap);
+}
+
+/* Device status */
+
+.app-section-content__status {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--layout-card-padding);
+  border: var(--layout-border-width) solid var(--color-border);
+  border-radius: var(--layout-card-radius);
+  background: var(--color-surface);
+  box-shadow: var(--layout-card-shadow);
+}
+
+.app-section-content__status-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.app-section-content__status-title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.app-section-content__connection {
+  display: inline-flex;
+  min-height: 1.9rem;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.app-section-content__connection--connected {
+  border-color: color-mix(in srgb, var(--color-success) 35%, transparent);
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  color: var(--color-success);
+}
+
+.app-section-content__connection--disconnected {
+  border-color: color-mix(in srgb, var(--color-warning) 35%, transparent);
+  background: color-mix(in srgb, var(--color-warning) 10%, transparent);
+  color: var(--color-warning);
+}
+
+.app-section-content__connection-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.app-section-content__status-message {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.app-section-content__status-message--error {
+  color: var(--color-danger);
+}
+
+/* Dynamic component layout */
+
+.app-section-content__grid {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr));
+  align-items: stretch;
+  gap: var(--layout-section-gap);
+}
+
+.app-section-content__component {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--space-3);
+  padding: var(--layout-card-padding);
+  border: var(--layout-border-width) solid var(--color-border);
+  border-radius: var(--layout-card-radius);
+  background: var(--color-surface);
+  box-shadow: var(--layout-card-shadow);
+}
+
+/* Let existing control components use the full available card width. */
+
+.app-section-content__component > * {
+  width: 100%;
+  min-width: 0;
+}
+
+.app-section-content__component .color-picker,
+.app-section-content__component .dropdown,
+.app-section-content__component .range-slider,
+.app-section-content__component .code-snippet {
+  width: 100%;
+  min-width: 0;
+}
+
+.app-section-content__component .range-slider__input {
+  width: 100%;
+}
+
+/* Code previews need more horizontal space than ordinary controls. */
+
+.app-section-content__component--codeSnippet {
+  grid-column: 1 / -1;
+}
+
+/* Action buttons are controls, not full-size content cards. */
+
+.app-section-content__component--button {
+  align-self: start;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-section-content__component--button > * {
+  width: auto;
+  max-width: 100%;
+}
+
+/* Keep long labels and values from forcing the grid wider than the viewport. */
+
+.app-section-content__component label,
+.app-section-content__component p,
+.app-section-content__component span {
+  overflow-wrap: anywhere;
+}
+
+.app-section-content__component input:not([type="range"]):not([type="color"]),
+.app-section-content__component select,
+.app-section-content__component textarea {
+  max-width: 100%;
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 760px) {
+  .app-section-content {
+    gap: var(--space-4);
+  }
+
+  .app-section-content__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  .app-section-content__component--codeSnippet {
+    grid-column: auto;
+  }
+
+  .app-section-content__status,
+  .app-section-content__component {
+    padding: var(--space-3);
+  }
+
+  .app-section-content__status-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-section-content__component,
+  .app-section-content__status {
+    transition: none;
+  }
+}

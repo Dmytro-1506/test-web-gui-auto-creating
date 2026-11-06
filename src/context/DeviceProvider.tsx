@@ -1,29 +1,33 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 
 import { getDeviceStatus, sendDeviceCommand } from "../api/deviceApi";
 import { DeviceContext } from "./DeviceContext";
 
 import type { DeviceContextValue } from "./DeviceContext";
-import type { DeviceStatus } from "../types/api/DeviceStatus.types";
+import type { DeviceStatus } from "../types/device/DeviceStatus.types";
 import type { DeviceCommand } from "../types/api/DeviceCommand.types";
 import type { ApiResponse } from "../types/api/ApiResponse.types";
-
-// Polling interval: 3 seconds
-const POLL_INTERVAL = 3000;
 
 export function DeviceProvider({ children }: { children: React.ReactNode }) {
   const [deviceStatus, setDeviceStatus] = useState<DeviceStatus | null>(null);
   const [connected, setConnected] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  // --------------------------------------------
-  // Refresh Device Status
-  // --------------------------------------------
+  // Keep refreshStatus stable so useDevicePolling does not restart on every update.
+  const hasCompletedInitialRequest = useRef(false);
 
+  /**
+   * Requests one status snapshot.
+   * Polling is deliberately not started here: DeviceOverview controls it.
+   */
   const refreshStatus = useCallback(async (): Promise<void> => {
+    if (!hasCompletedInitialRequest.current) {
+      setLoading(true);
+    }
+
     try {
       const result = await getDeviceStatus();
 
@@ -39,13 +43,10 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
           : "Unknown device connection error",
       );
     } finally {
+      hasCompletedInitialRequest.current = true;
       setLoading(false);
     }
   }, []);
-
-  // --------------------------------------------
-  // Send Device Command
-  // --------------------------------------------
 
   const sendCommand = useCallback(
     async (command: DeviceCommand): Promise<ApiResponse> => {
@@ -61,7 +62,7 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
           );
         }
 
-        // Read the real hardware state after the ESP32 confirms the command.
+        // Fetch the actual hardware state after a successful command.
         await refreshStatus();
 
         return response;
@@ -79,39 +80,6 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
     },
     [refreshStatus],
   );
-
-  // --------------------------------------------
-  // Automatic Status Polling
-  // --------------------------------------------
-
-  useEffect(() => {
-    let active = true;
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
-
-    const poll = async () => {
-      await refreshStatus();
-
-      if (active) {
-        timeoutId = setTimeout(poll, POLL_INTERVAL);
-      }
-    };
-
-    // Initial status request.
-    void poll();
-
-    // Cleanup
-    return () => {
-      active = false;
-
-      if (timeoutId !== undefined) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [refreshStatus]);
-
-  // --------------------------------------------
-  // Context Value
-  // --------------------------------------------
 
   const contextValue = useMemo<DeviceContextValue>(
     () => ({

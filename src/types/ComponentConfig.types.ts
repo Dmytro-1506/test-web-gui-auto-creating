@@ -5,12 +5,18 @@ import type { DropdownConfig } from "./components/Dropdown.types";
 import type { RangeSliderConfig } from "./components/RangeSlider.types";
 import type { TextInputConfig } from "./components/TextInput.types";
 import type { ToggleSwitchConfig } from "./components/ToggleSwitch.types";
+import type { ContainerConfig } from "./components/Container.types";
+import type { InfoBoxConfig } from "./components/InfoBox.types";
+import type { SystemInfoConfig } from "./device/SystemInfo.types";
 
 export type ComponentConfig =
   | TextInputConfig
   | ActionButtonConfig
   | ToggleSwitchConfig
+  | ContainerConfig
   | ColorPickerConfig
   | RangeSliderConfig
   | DropdownConfig
-  | CodeSnippetConfig;
+  | CodeSnippetConfig
+  | InfoBoxConfig
+  | SystemInfoConfig;
