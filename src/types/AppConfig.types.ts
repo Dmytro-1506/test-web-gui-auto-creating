@@ -1,4 +1,5 @@
 import type { ComponentConfig } from "./ComponentConfig.types";
+import type { DeviceOverviewConfig } from "./device/DeviceOverviewConfig.types";
 
 export interface MenuItemConfig {
   id: string;
@@ -9,5 +10,9 @@ export interface MenuItemConfig {
 }
 
 export interface AppConfig {
-  configParams: { menuItems: Record<string, MenuItemConfig> };
+  configParams: {
+    menuItems: {
+      [key: string]: MenuItemConfig | DeviceOverviewConfig;
+    };
+  };
 }

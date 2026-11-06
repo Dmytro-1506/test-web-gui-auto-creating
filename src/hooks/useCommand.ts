@@ -32,6 +32,7 @@ export function useCommand() {
   const executeCommand = useCallback(
     async (commandRef: string, values: ComponentValues) => {
       const command = createCommand(commandRef, values);
+      // console.log("executeCommand", { commandRef, values, command });
 
       return await sendCommand(command);
     },

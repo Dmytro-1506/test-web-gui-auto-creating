@@ -1,5 +1,31 @@
 {
   "id": "test-status-001",
   "type": "command",
-  "command": "getStatus"
+  "command": "getStatus",
+  "parameters": {
+    "displayStatus": {
+      "$source": "component",
+      "componentId": "displayOverview"
+    },
+    "ledStatus": {
+      "$source": "component",
+      "componentId": "ledOverview"
+    },
+    "soundStatus": {
+      "$source": "component",
+      "componentId": "soundOverview"
+    },
+    "buttonStatuses": {
+      "$source": "component",
+      "componentId": "buttonsSection"
+    },
+    "wifiStatus": {
+      "$source": "component",
+      "componentId": "wifiOverview"
+    },
+    "batteryStatus": {
+      "$source": "component",
+      "componentId": "batteryOverview"
+    }
+  }
 }

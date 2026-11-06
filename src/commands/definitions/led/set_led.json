@@ -15,14 +15,18 @@
       "$source": "component",
       "componentId": "ledEffectSelector"
     },
-    "effectInterval": 1000,
-    "switchColors": true,
-    "colors": [
-      {
-        "$source": "component",
-        "componentId": "ledColorPicker",
-        "transform": "hexToRgb"
-      }
-    ]
+    "effectInterval": {
+      "$source": "component",
+      "componentId": "ledEffectIntervalSlider"
+    },
+    "switchColors": {
+      "$source": "component",
+      "componentId": "ledColorSwitch"
+    },
+    "colors": {
+      "$source": "component",
+      "componentId": "ledColorsContainer",
+      "transform": "hexArrayToRgb"
+    }
   }
 }

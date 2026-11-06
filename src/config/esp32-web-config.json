@@ -1,6 +1,111 @@
 {
   "configParams": {
     "menuItems": {
+      "deviceOverview": {
+        "id": "deviceOverview",
+        "label": "Device Overview",
+        "title": "Device Overview Section",
+        "defaultState": {
+          "name": "ESP32 Device",
+          "connected": false
+        },
+        "components": {
+          "syncStatusButton": {
+            "type": "button",
+            "id": "syncStatusButton",
+            "position": 0,
+            "params": {
+              "size": 3,
+              "label": "Sync Status",
+              "action": "sendCommand",
+              "commandRef": "getStatus"
+            }
+          },
+          "display": {
+            "type": "infoBox",
+            "id": "displayOverview",
+            "position": 1,
+            "params": {
+              "size": 3,
+              "title": "Display Overview",
+              "content": "Display is currently off.",
+              "variant": "info",
+              "enabled": true,
+              "width": 320,
+              "height": 170,
+              "unit": "px",
+              "commandRef": "getStatus"
+            }
+          },
+          "led": {
+            "type": "infoBox",
+            "id": "ledOverview",
+            "position": 2,
+            "params": {
+              "size": 3,
+              "title": "LED Overview",
+              "content": "LED is currently off.",
+              "variant": "info",
+              "enabled": true,
+              "color": "#FF0000",
+              "brightness": 50,
+              "effect": "none",
+              "commandRef": "getStatus"
+            }
+          },
+          "sound": {
+            "type": "infoBox",
+            "id": "soundOverview",
+            "position": 3,
+            "params": {
+              "size": 3,
+              "title": "Sound Overview",
+              "content": "Sound is currently off.",
+              "variant": "info",
+              "enabled": true,
+              "commandRef": "getStatus"
+            }
+          },
+          "buttonsSection": {
+            "type": "infoBox",
+            "id": "buttonsSection",
+            "position": 4,
+            "params": {
+              "size": 3,
+              "title": "Buttons Section",
+              "content": "Button controls for the device.",
+              "variant": "info",
+              "enabled": true,
+              "commandRef": "getStatus"
+            }
+          },
+          "systemInfo": {
+            "type": "infoBox",
+            "id": "systemInfo",
+            "position": 5,
+            "params": {
+              "title": "System Information Section",
+              "label": "System Info",
+              "commandRef": "getStatus",
+              "content": "",
+              "wifi": {
+                "connected": true,
+                "ssid": "MyWiFi",
+                "ip": "192.168.178.52",
+                "rssi": -55
+              },
+              "bluetooth": {
+                "enabled": false,
+                "connected": false
+              },
+              "battery": {
+                "voltage": 4.2,
+                "percentage": 100
+              }
+            }
+          }
+        }
+      },
       "display": {
         "id": "display",
         "label": "Display",
@@ -61,24 +166,10 @@
               "size": 3,
               "label": "LED brightness",
               "unit": "%",
-              "min": 1,
+              "min": 10,
               "max": 100,
-              "step": 1,
-              "defaultValue": 90,
-              "dependency": {
-                "componentId": "ledPowerSwitch",
-                "condition": "checked"
-              }
-            }
-          },
-          "colorPicker": {
-            "type": "colorPicker",
-            "id": "ledColorPicker",
-            "position": 3,
-            "params": {
-              "size": 3,
-              "label": "LED color",
-              "defaultValue": "#FF0000",
+              "step": 10,
+              "defaultValue": 50,
               "dependency": {
                 "componentId": "ledPowerSwitch",
                 "condition": "checked"
@@ -88,7 +179,7 @@
           "effectSelector": {
             "type": "dropdown",
             "id": "ledEffectSelector",
-            "position": 4,
+            "position": 3,
             "params": {
               "size": 3,
               "label": "LED effect",
@@ -113,13 +204,60 @@
               }
             }
           },
+          "effectInterval": {
+            "type": "rangeSlider",
+            "id": "ledEffectIntervalSlider",
+            "position": 4,
+            "params": {
+              "size": 3,
+              "label": "Effect interval",
+              "unit": "ms",
+              "min": 100,
+              "max": 3000,
+              "step": 100,
+              "defaultValue": 1000,
+              "dependency": {
+                "componentId": "ledPowerSwitch",
+                "condition": "checked"
+              }
+            }
+          },
+          "colorSwitch": {
+            "type": "toggleSwitch",
+            "id": "ledColorSwitch",
+            "position": 6,
+            "params": {
+              "size": 3,
+              "label": "Switch colors",
+              "checked": false,
+              "dependency": {
+                "componentId": "ledPowerSwitch",
+                "condition": "checked"
+              }
+            }
+          },
+          "colorsContainer": {
+            "type": "container",
+            "id": "ledColorsContainer",
+            "position": 7,
+            "params": {
+              "size": 3,
+              "label": "LED colors",
+              "defaultValue": "#FF0000",
+              "maxItems": 5,
+              "dependency": {
+                "componentId": "ledColorSwitch",
+                "condition": "checked"
+              }
+            }
+          },
           "codeSnippet": {
             "type": "codeSnippet",
             "id": "ledCodeSnippet",
-            "position": 5,
+            "position": 8,
             "params": {
               "size": 3,
-              "label": "LED Code Snippet",
+              "label": "LED Command",
               "language": "json",
               "commandRef": "setLED",
               "defaultValue": "{\n  \"isOn\": false,\n  \"brightness\": 50,\n  \"effect\": \"none\",\n  \"switchColors\": false,\n  \"effectInterval\": 1000,\n  \"colors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ]\n}",
@@ -132,7 +270,7 @@
           "button": {
             "type": "button",
             "id": "setLED",
-            "position": 6,
+            "position": 9,
             "params": {
               "size": 3,
               "label": "Apply LED Settings",

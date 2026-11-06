@@ -41,6 +41,24 @@ function transformValue(value: JsonValue, transform?: string): JsonValue {
       };
     }
 
+    case "hexArrayToRgb": {
+      if (!Array.isArray(value)) {
+        throw new Error("hexArrayToRgb expects an array");
+      }
+
+      return value.map((color) => {
+        if (typeof color !== "string" || !/^#[0-9a-fA-F]{6}$/.test(color)) {
+          throw new Error(`Invalid hex color: ${color}`);
+        }
+
+        return {
+          red: parseInt(color.slice(1, 3), 16),
+          green: parseInt(color.slice(3, 5), 16),
+          blue: parseInt(color.slice(5, 7), 16),
+        };
+      });
+    }
+
     default:
       return value;
   }
